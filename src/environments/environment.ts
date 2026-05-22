@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.maple.com', // Mock fallback
+  apiUrl: 'https://cartsure.onrender.com/api',
   firebase: {
     apiKey: "AIzaSyCFV2OrSKXPydI1vIW6uacbBdS6K9NBWX0",
     authDomain: "maple-store-1eeb2.firebaseapp.com",
