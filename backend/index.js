@@ -16,8 +16,8 @@ app.use(cors({
 app.use(express.json());
 
 // Load Razorpay keys from environment variables or use test keys as fallback
-const keyId = process.env.RAZORPAY_KEY_ID || "rzp_test_Spvxd0aXv1knrF";
-const keySecret = process.env.RAZORPAY_KEY_SECRET || "NKP6VfjKKbAdBZ1wQy4zAx66";
+const keyId = process.env.RAZORPAY_KEY_ID;
+const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
 const razorpay = new Razorpay({
   key_id: keyId,
@@ -52,7 +52,7 @@ app.post("/api/create-order", async (req, res) => {
     };
 
     const order = await razorpay.orders.create(options);
-    
+
     res.json({
       orderId: order.id,
       amount: order.amount,
@@ -60,8 +60,8 @@ app.post("/api/create-order", async (req, res) => {
     });
   } catch (error) {
     console.error("Razorpay Order Creation Error:", error);
-    res.status(500).json({ 
-      error: error.message || "Failed to create Razorpay order." 
+    res.status(500).json({
+      error: error.message || "Failed to create Razorpay order."
     });
   }
 });
