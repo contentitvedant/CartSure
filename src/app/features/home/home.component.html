@@ -1,0 +1,54 @@
+<div class="w-full">
+  <!-- Hero Section -->
+  <section class="w-full bg-[#f5f5f7] py-24 md:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col items-center text-center">
+    <div class="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
+      <h2 class="text-6xl sm:text-8xl font-semibold tracking-tighter text-gray-900 mb-4">MacBook Pro</h2>
+      <p class="text-2xl sm:text-[32px] text-gray-500 mb-12 font-medium tracking-tight">Mind-blowing. Head-turning.</p>
+      
+      <div class="flex items-center justify-center space-x-6 mb-20">
+        <button class="bg-gray-900 hover:bg-black text-white rounded-full px-8 py-3 text-[17px] font-medium transition-colors shadow-sm active:scale-95">
+          Buy
+        </button>
+        <button class="text-[#06c] hover:underline text-[17px] font-medium flex items-center group">
+          Learn more
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-[14px] h-[14px] ml-1.5 group-hover:translate-x-1 transition-transform">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+      </div>
+
+      <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80" alt="MacBook Pro" class="w-full max-w-4xl rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] object-cover aspect-[16/9]">
+    </div>
+  </section>
+
+  <!-- Main Content Area -->
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    
+
+    <!-- Featured Products -->
+    <section>
+      <div class="flex items-center justify-between mb-10">
+        <h3 class="text-4xl font-semibold tracking-tighter text-gray-900">The latest. <span class="text-gray-400">Take a look at what's new.</span></h3>
+      </div>
+      
+      <!-- Product Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        @if (featuredProducts$ | async; as products) {
+          @for (product of products; track product.id) {
+            <app-product-card [product]="product"></app-product-card>
+          }
+        } @else {
+          <!-- Loading state -->
+          @for (i of [1,2,3,4]; track i) {
+            <div class="glass-card rounded-[1.5rem] p-6 h-[420px] flex flex-col">
+              <div class="aspect-square bg-gray-100/30 rounded-[1.25rem] mb-6 animate-pulse backdrop-blur-sm"></div>
+              <div class="h-3 bg-gray-100/20 rounded-full w-1/4 mb-3 animate-pulse"></div>
+              <div class="h-6 bg-gray-100/20 rounded-md w-3/4 mb-4 animate-pulse"></div>
+              <div class="mt-auto h-6 bg-gray-100/20 rounded-md w-1/4 animate-pulse"></div>
+            </div>
+          }
+        }
+      </div>
+    </section>
+  </div>
+</div>

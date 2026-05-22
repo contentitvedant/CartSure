@@ -1,0 +1,75 @@
+<form [formGroup]="filterForm" class="w-full space-y-8 pr-0 lg:pr-6">
+  
+  <div class="flex items-center justify-between">
+    <h3 class="text-[20px] font-semibold tracking-tight text-gray-900">Filters</h3>
+    <button type="button" (click)="resetFilters()" class="text-[13px] font-medium text-[#06c] hover:underline transition-all">Clear all</button>
+  </div>
+
+  <!-- Sort By -->
+  <div class="space-y-4">
+    <h4 class="font-semibold text-gray-900 border-b border-gray-100 pb-3 text-[15px]">Sort By</h4>
+    <div class="flex flex-col space-y-3.5">
+      <label class="flex items-center group cursor-pointer">
+        <input type="radio" formControlName="sortBy" value="popularity" class="hidden">
+        <div class="w-4 h-4 rounded-full border flex items-center justify-center mr-3.5 transition-colors"
+             [ngClass]="filterForm.get('sortBy')?.value === 'popularity' ? 'border-black bg-black' : 'border-gray-300 group-hover:border-gray-500'">
+          @if (filterForm.get('sortBy')?.value === 'popularity') {
+            <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+          }
+        </div>
+        <span class="text-[15px] font-medium transition-colors" [ngClass]="filterForm.get('sortBy')?.value === 'popularity' ? 'text-black' : 'text-gray-600 group-hover:text-black'">Popularity</span>
+      </label>
+
+      <label class="flex items-center group cursor-pointer">
+        <input type="radio" formControlName="sortBy" value="price_asc" class="hidden">
+        <div class="w-4 h-4 rounded-full border flex items-center justify-center mr-3.5 transition-colors"
+             [ngClass]="filterForm.get('sortBy')?.value === 'price_asc' ? 'border-black bg-black' : 'border-gray-300 group-hover:border-gray-500'">
+          @if (filterForm.get('sortBy')?.value === 'price_asc') {
+            <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+          }
+        </div>
+        <span class="text-[15px] font-medium transition-colors" [ngClass]="filterForm.get('sortBy')?.value === 'price_asc' ? 'text-black' : 'text-gray-600 group-hover:text-black'">Price: Low to High</span>
+      </label>
+
+      <label class="flex items-center group cursor-pointer">
+        <input type="radio" formControlName="sortBy" value="price_desc" class="hidden">
+        <div class="w-4 h-4 rounded-full border flex items-center justify-center mr-3.5 transition-colors"
+             [ngClass]="filterForm.get('sortBy')?.value === 'price_desc' ? 'border-black bg-black' : 'border-gray-300 group-hover:border-gray-500'">
+          @if (filterForm.get('sortBy')?.value === 'price_desc') {
+            <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+          }
+        </div>
+        <span class="text-[15px] font-medium transition-colors" [ngClass]="filterForm.get('sortBy')?.value === 'price_desc' ? 'text-black' : 'text-gray-600 group-hover:text-black'">Price: High to Low</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div class="space-y-4">
+     <h4 class="font-semibold text-gray-900 border-b border-gray-100 pb-3 text-[15px]">Category</h4>
+     <div class="flex flex-col space-y-3.5">
+        @for (cat of availableCategories; track cat) {
+          <label class="flex items-center group cursor-pointer">
+            <input type="checkbox" [value]="cat" (change)="toggleCategory(cat, $event)" class="w-4 h-4 rounded text-black bg-white border-gray-300 focus:ring-black focus:ring-2 cursor-pointer transition-all checked:bg-black checked:border-black accent-black">
+            <span class="ml-3.5 text-[15px] text-gray-600 group-hover:text-black font-medium transition-colors">{{ cat }}</span>
+          </label>
+        }
+     </div>
+  </div>
+
+  <!-- Price Range -->
+  <div class="space-y-4">
+    <h4 class="font-semibold text-gray-900 border-b border-gray-100 pb-3 text-[15px]">Price Range</h4>
+    <div class="flex items-center space-x-3">
+      <div class="relative w-full">
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-[15px]">$</span>
+        <input type="number" formControlName="minPrice" placeholder="Min" class="w-full pl-7 pr-3 py-2.5 bg-[#f5f5f7] border border-transparent rounded-[12px] focus:bg-white focus:ring-[3px] focus:ring-black/10 focus:border-black/20 outline-none text-[15px] font-medium placeholder:text-gray-400 transition-all">
+      </div>
+      <span class="text-gray-400 font-medium">-</span>
+      <div class="relative w-full">
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-[15px]">$</span>
+        <input type="number" formControlName="maxPrice" placeholder="Max" class="w-full pl-7 pr-3 py-2.5 bg-[#f5f5f7] border border-transparent rounded-[12px] focus:bg-white focus:ring-[3px] focus:ring-black/10 focus:border-black/20 outline-none text-[15px] font-medium placeholder:text-gray-400 transition-all">
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,97 @@
+<div class="bg-[#fbfbfd] min-h-[calc(100vh-64px)] py-10 md:py-16 print:bg-white print:py-0">
+  <div class="max-w-[800px] mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Controls (Hidden on Print) -->
+    <div class="flex justify-between items-center mb-8 print:hidden">
+      <button routerLink="/" class="text-[#06c] text-[15px] hover:underline font-medium flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+        Back to Store
+      </button>
+      <button (click)="printInvoice()" class="bg-white border border-gray-200/80 text-gray-900 px-5 py-2.5 rounded-full text-[13px] font-semibold hover:bg-gray-50 hover:text-black transition-colors shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center active:scale-95">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+        Download PDF
+      </button>
+    </div>
+
+    <!-- Invoice Paper Layout -->
+    <div class="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-8 sm:p-12 print:shadow-none print:border-none print:p-0 print:rounded-none animate-fade-in">
+      
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-8 mb-8">
+        <div>
+          <h1 class="text-3xl font-semibold tracking-tight text-gray-900 mb-1">Receipt</h1>
+          <p class="text-gray-500 text-[15px] font-medium tracking-wide">Order {{ orderId }}</p>
+        </div>
+        <div class="mt-4 sm:mt-0 text-left sm:text-right">
+          <div class="text-[26px] font-bold tracking-tight text-black flex items-center justify-start sm:justify-end mb-1">CartSure.</div>
+          <p class="text-gray-500 text-[13px] leading-relaxed">1 Apple Park Way<br>Cupertino, CA 95014</p>
+        </div>
+      </div>
+
+      <!-- Customer Details -->
+      <div class="flex flex-col sm:flex-row justify-between mb-12 text-[14.5px]">
+        <div>
+          <p class="text-gray-400 font-bold uppercase tracking-wider text-[11px] mb-3">Billed To</p>
+          <p class="font-semibold text-gray-900">{{ customer.name }}</p>
+          <p class="text-gray-500">{{ customer.address }}</p>
+          <p class="text-gray-500">{{ customer.city }}, {{ customer.zip }}</p>
+          <p class="text-gray-500 mt-1">{{ customer.email }}</p>
+        </div>
+        <div class="mt-8 sm:mt-0 text-left sm:text-right">
+          <p class="text-gray-400 font-bold uppercase tracking-wider text-[11px] mb-3">Date Details</p>
+          <p class="font-semibold text-gray-900">{{ orderDate | date:'longDate' }}</p>
+        </div>
+      </div>
+
+      <!-- Items Grid -->
+      <div class="w-full">
+        <!-- Table Header Columns -->
+        <div class="grid grid-cols-12 gap-4 border-b border-gray-200/80 pb-3 mb-5 text-[12px] font-bold text-gray-400 uppercase tracking-wider">
+          <div class="col-span-8 sm:col-span-7 pl-2">Description</div>
+          <div class="col-span-4 sm:col-span-5 grid grid-cols-2">
+             <div class="text-right">Qty</div>
+             <div class="text-right pr-2">Amount</div>
+          </div>
+        </div>
+        
+        <!-- Table Body Mappings -->
+        <div class="space-y-4 mb-8">
+          @for (item of items; track item.name) {
+            <div class="grid grid-cols-12 gap-4 items-start text-[15px] p-2 hover:bg-gray-50/50 rounded-xl transition-colors">
+              <div class="col-span-8 sm:col-span-7 pr-4">
+                <p class="font-semibold text-gray-900">{{ item.name }}</p>
+                <p class="text-gray-500 text-[13px] mt-0.5">{{ item.meta }}</p>
+              </div>
+              <div class="col-span-4 sm:col-span-5 grid grid-cols-2 pt-0.5">
+                 <div class="text-right text-gray-600 font-medium">{{ item.quantity }}</div>
+                 <div class="text-right text-gray-900 font-semibold">{{ item.price | currency:'INR':'symbol':'1.0-0' }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Financial Calculations -->
+      <div class="border-t border-gray-200/80 pt-6 mt-10">
+        <div class="flex justify-end">
+          <div class="w-full sm:w-[280px] space-y-3.5 pr-2">
+            <div class="flex justify-between text-[14.5px]">
+              <span class="text-gray-500 font-medium">Subtotal</span>
+              <span class="text-gray-900 font-semibold">{{ subtotal | currency:'INR':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="flex justify-between text-[14.5px]">
+              <span class="text-gray-500 font-medium">Sales Tax</span>
+              <span class="text-gray-900 font-semibold">{{ tax | currency:'INR':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="flex justify-between items-center pt-5 border-t border-gray-100 mt-2">
+              <span class="text-xl font-bold text-gray-900">Total</span>
+              <span class="text-2xl font-bold text-[#0071e3] tracking-tight">{{ total | currency:'INR':'symbol':'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+</div>
