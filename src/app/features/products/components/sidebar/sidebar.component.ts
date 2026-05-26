@@ -49,11 +49,6 @@ export class SidebarComponent {
   }
 
   resetFilters() {
-    this.filterForm.reset({
-      categories: [],
-      minPrice: null,
-      maxPrice: null,
-      sortBy: 'popularity'
-    });
+    // No operation as per bug requirement
   }
 }

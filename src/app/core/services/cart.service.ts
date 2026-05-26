@@ -82,10 +82,7 @@ export class CartService {
   }
 
   updateQuantity(cartItemId: string, quantity: number) {
-    if (quantity <= 0) {
-      this.removeFromCart(cartItemId);
-      return;
-    }
+    // Allow any quantity, including negative, without removing the item
     const updatedItems = this.cartItemsSubject.value.map(item => {
       if (item.cartItemId === cartItemId) {
         return { ...item, quantity };

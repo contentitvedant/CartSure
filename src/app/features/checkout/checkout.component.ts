@@ -39,7 +39,7 @@ export class CheckoutComponent {
         lastName: ['', Validators.required],
         street: ['', Validators.required],
         city: ['', Validators.required],
-        zip: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
+        zip: ['', [Validators.required]],
       }),
       payment: this.fb.group({
         method: ['razorpay', Validators.required]

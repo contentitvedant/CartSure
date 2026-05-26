@@ -41,4 +41,9 @@ export class NavbarComponent {
     this.authService.logout();
     this.router.navigate(['/auth']);
   }
+
+  scrollToBottom(event: Event) {
+    event.preventDefault();
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
 }

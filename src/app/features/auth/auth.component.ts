@@ -70,7 +70,14 @@ export class AuthComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = err.message || 'An error occurred during authentication.';
+        const errorMessage = err.message || 'An error occurred during authentication.';
+        if (!this.isLoginMode && err.code === 'auth/email-already-in-use') {
+          // Set specific form error for existing email
+          this.authForm.get('email')?.setErrors({ emailInUse: true });
+          this.errorMessage = 'An account already exists with this email address.';
+        } else {
+          this.errorMessage = errorMessage;
+        }
       }
     });
   }
